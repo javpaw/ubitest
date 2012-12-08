@@ -1,3 +1,4 @@
 import ubiClient as ub
-import apiKey as ak
+from apiKey import api_key
+print api_key
 client = ub.ConnectionUbidots()
