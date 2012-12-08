@@ -13,11 +13,15 @@ for site in sites:
   ids = [vr['id']  for vr in vari]
   print ids
 
-num_pages = client.getValues(ids[0])['meta']['num_pages']
-print num_pages
 
-data =[]
-for i in range(1,num_pages+1):
-  data.extend(client.getValues2(ids[0],page=i)['values'])
-print len(data)
-#obtener todos los datos de un sensor:
+for sid in ids[1:]:
+  print "in %s"%sid
+  num_pages = client.getValues(sid)['meta']['num_pages']
+  data =[]
+  for i in range(1,num_pages+1):
+    data.extend(client.getValues2(sid,page=i)['values'])
+  f = open(str(sid)+".json",'w')
+
+  f.write(str(data))
+  f.close()
+  #obtener todos los datos de un sensor:
