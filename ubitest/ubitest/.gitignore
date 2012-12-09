@@ -1,3 +1,4 @@
 local_settings.py
 __local_settings.py
 *.db
+public/

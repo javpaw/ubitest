@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services
-angular.module('ubiApp',[]). //['ubiApp.filters', 'ubiApp.services', 'ubiApp.directives']).
+angular.module('ubiApp',['ubiApp.directives']). //['ubiApp.filters', 'ubiApp.services', 'ubiApp.directives']).
   // config([
   // '$routeProvider', function($routeProvider) {
   //   $routeProvider.when('/view1', {template: 'partials/partial1.html', controller: MyCtrl1});

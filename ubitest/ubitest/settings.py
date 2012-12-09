@@ -124,7 +124,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'compressor',
-    'south'
+    'south',
+    'sensors',
 )
 
 # A sample logging configuration. The only tangible logging

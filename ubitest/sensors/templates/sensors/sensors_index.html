@@ -1,12 +1,74 @@
 {%extends "base.html"%}
 {% load compress %}
 
+{%block content%}
+<style type="text/css">
+
+      body {
+        font: 10px sans-serif;
+        margin: 0;
+      }
+
+      path.line {
+        fill: none;
+        stroke: #ff7f0e;
+        stroke-width: 2px;
+      }
+
+      path.area {
+        fill: #e7e7e7;
+      }
+
+      .axis {
+        shape-rendering: crispEdges;
+      }
+
+      .x.axis line {
+        stroke: #000;
+      }
+
+      .x.axis path{
+        fill:none;
+        stroke:#000;
+        shape-rendering: crispEdges;
+      }
+
+      .x.axis .minor {
+        stroke-opacity: .5;
+      }
+
+      /*.x.axis path {
+        display: none;
+      }*/
+
+      .y.axis line, .y.axis path {
+        fill: none;
+        stroke: #000;
+      }
+
+</style>
+
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span8 offset2">
+
+    <div jv-visualization>
+    </div>  
+
+
+    </div>
+  </div>
+</div>
+{%endblock%}
 
 {% block footer_javascript_section %}
 
-{% compress js %}
+{#{% compress js %}#}
+
+  <script src="{{STATIC_URL}}sensors/js/directives.js"></script>
   <script src="{{STATIC_URL}}sensors/js/app.js"></script>
   <script src="{{STATIC_URL}}sensors/js/controllers.js"></script>
-{%endcompress%}
+{#{%endcompress%}#}
 
 {% endblock footer_javascript_section %}
