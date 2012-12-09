@@ -1,0 +1,12 @@
+{%extends "base.html"%}
+{% load compress %}
+
+
+{% block footer_javascript_section %}
+
+{% compress js %}
+  <script src="{{STATIC_URL}}sensors/js/app.js"></script>
+  <script src="{{STATIC_URL}}sensors/js/controllers.js"></script>
+{%endcompress%}
+
+{% endblock footer_javascript_section %}
