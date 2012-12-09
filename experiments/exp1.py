@@ -1,5 +1,7 @@
 import ubiClient as ub
 from apiKey import api_key
+import json
+
 client = ub.ConnectionUbidots()
 client.authKey(api_key)
 
@@ -14,7 +16,7 @@ for site in sites:
   print ids
 
 
-for sid in ids[1:]:
+for sid in ids[:2]:
   print "in %s"%sid
   num_pages = client.getValues(sid)['meta']['num_pages']
   data =[]
@@ -22,6 +24,6 @@ for sid in ids[1:]:
     data.extend(client.getValues2(sid,page=i)['values'])
   f = open(str(sid)+".json",'w')
 
-  f.write(str(data))
+  f.write(json.dumps(data))
   f.close()
   #obtener todos los datos de un sensor:
