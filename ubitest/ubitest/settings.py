@@ -71,6 +71,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder'
 )
 
 # List of callables that know how to import templates from various sources.
@@ -122,6 +123,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'compressor',
+    'south'
 )
 
 # A sample logging configuration. The only tangible logging
@@ -160,3 +163,11 @@ except NameError:
         from local_settings import *
     except ImportError:
         pass
+
+#########################################
+#COMPRESSOR
+#########################################
+COMPRESS_ENABLED = True
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)
