@@ -1,10 +1,75 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title></title>
-    </head>
-    <body>
+{% load compress %}
+{% block dtd %}<!doctype html>{% endblock dtd %}
+<html ng-app="myApp">
+{% block html_tag %}{% endblock html_tag %}
+{% block head %}
+ <head>
+    <title>{% block title %}{{ pagina.titulo }}{% endblock title %}</title>
+    {% block head_favicon %}
+    {% endblock head_favicon %}
+    {% block head_meta %}
+        {% block head_meta_author%}{% endblock head_meta_author %}
+        {% block head_meta_charset %}<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />{% endblock head_meta_charset %}
+        {% block head_meta_contentlanguage %}<meta http-equiv="Content-Language" value="en-US" />{% endblock head_meta_contentlanguage %}
+        {% block head_meta_description %}{% endblock head_meta_description %}
+        {% block head_meta_keywords %}{% endblock head_meta_keywords %}
+        {% block head_meta_othertags %}{% endblock head_meta_othertags %}
+        {% block head_meta_refresh %}{% endblock head_meta_refresh %}
+        {% block head_meta_robots %}{% endblock head_meta_robots %}
+    {% endblock head_meta %}
+    {% block head_rss %}{% endblock head_rss %}
+    {% block head_css %}
+        {% block head_css_site %}
+         
+            {% compress css %}
+            <link rel="stylesheet" href="{{STATIC_URL}}css/jquery-ui.css">
+            <link rel="stylesheet" href="{{STATIC_URL}}css/jquery-ui-theme.css">
+            <link rel="stylesheet" href="{{STATIC_URL}}css/d3.css">
+            <link type="text/less" rel="stylesheet" href="{{STATIC_URL}}css/main.less" charset="utf-8">
+            {%endcompress%}
+
+
+        {% endblock head_css_site %}
+        {% block head_css_section %}{% endblock head_css_section %}
+        {% block head_css_page %}{% endblock head_css_page %}
+    {% endblock head_css %}
+    {% block head_section %}{% endblock head_section %}
+    {% block head_page %}{% endblock head_page %}
+    {% block variables%}{%endblock variables%}
+</head>
+{% endblock head %}
+
+<body>
+ {%block body%}
+   {%block header%}{%endblock header%}
+   {%block content%}{%endblock content%}
+ {%endblock body%}         
+</body>
+
+{% block footer %}
+    {% block footer_javascript %}
+        {% block footer_javascript_site %}
+        <script src ="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src=" https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+
+        <script src="{{STATIC_URL}}js/angular-1.0.1.js"></script>
+        <script src="{{STATIC_URL}}js/angular-resource-1.0.1.min.js"></script>
+        <script src="{{STATIC_URL}}js/underscore.js"></script>
+
+   
+        <script src="{{STATIC_URL}}js/d3.v2.js"></script>
+        <script src="{{STATIC_URL}}js/nv/fisheye.js"></script>
+        <script src="{{STATIC_URL}}js/nv.d3.js"></script>
+      
+        <script src="{{STATIC_URL}}js/nv/models/scatter.js"></script>
+        <script src="{{STATIC_URL}}js/nv/models/scatterChart.js"></script>
         
-    </body>
+        <script src="{{STATIC_URL}}js/nv/models/discreteBar.js"></script>
+        <script src="{{STATIC_URL}}js/nv/models/discreteBarChart.js"></script>
+
+        {% endblock footer_javascript_site %}
+        {% block footer_javascript_section %}{% endblock footer_javascript_section %}
+        {% block footer_javascript_page %}{% endblock footer_javascript_page %}
+    {% endblock footer_javascript %}
+{% endblock footer %}
 </html>
