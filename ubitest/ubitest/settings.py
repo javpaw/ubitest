@@ -1,5 +1,8 @@
 # Global settings for ubitest project.
 import os
+import djcelery
+from datetime import timedelta
+djcelery.setup_loader()
 
 PROJECT_DIR = os.path.dirname(__file__)
 PUBLIC_DIR = os.path.join(PROJECT_DIR, 'public')
@@ -125,6 +128,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'compressor',
     'south',
+    'djcelery',
     'sensors',
 )
 
@@ -172,3 +176,17 @@ COMPRESS_ENABLED = True
 COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} {outfile}'),
 )
+
+
+#########################################
+#Celery
+#########################################
+# CELERYBEAT_SCHEDULE = {
+#     'runs-every-30-seconds': {
+#         'task': 'sensors.tasks.add',
+#         'schedule': timedelta(seconds=20),
+#         'args': (16, 16)
+#     },
+# }
+
+TEST_RUNNER = 'djcelery.contrib.test_runner.CeleryTestSuiteRunner'

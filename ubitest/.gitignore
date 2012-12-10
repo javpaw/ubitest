@@ -17,3 +17,5 @@ atlassian-ide-plugin.xml
 /{{ project_name }}/local_settings.py
 /{{ project_name }}/public/static
 /{{ project_name }}/public/media
+
+celerybeat-schedule

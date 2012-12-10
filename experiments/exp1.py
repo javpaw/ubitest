@@ -16,7 +16,7 @@ for site in sites:
   print ids
 
 
-for sid in ids[:2]:
+for sid in ids:
   print "in %s"%sid
   num_pages = client.getValues(sid)['meta']['num_pages']
   data =[]
