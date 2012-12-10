@@ -21,3 +21,18 @@ def por_horas(request):
   ]
   print result
   return render_to_response("sensors/por_hora.html",{'resultado':result },RequestContext(request))
+
+
+def por_dias(request):
+  from tasks import calculate_per_days
+  result = calculate_per_days()
+  result = [{'sensor':i[0],'hora':i[1],'valor':i[2] } for i in
+      zip(list(result['sensor_name']),list(result['hora']),list(result['valor']) )
+  ]
+  print result
+  return render_to_response("sensors/por_hora.html",{'resultado':result },RequestContext(request))
+
+def total(request):
+    from tasks import calculate_total
+    result = int(calculate_total()/1000)
+    return render_to_response("sensors/total.html",{"resultado":result},RequestContext(request))

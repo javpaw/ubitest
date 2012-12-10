@@ -41,7 +41,22 @@
 
 <body>
  {%block body%}
-   {%block header%}{%endblock header%}
+   {%block header%}
+
+        <div class="navbar">
+          <div class="navbar-inner">
+            <a class="brand" href="#">Ubidots</a>
+            <ul class="nav">
+              <li><a href="/">Graficas</a></li>
+              <li><a href="/por_horas">Tabla por Horas</a></li>
+              <li><a href="/por_dias">Tabla por dias</a></li>
+              <li><a href="/total">Total</a></li>
+              <li><a href="/actualizar_todos">Actualizar </a></li>
+            </ul>
+          </div>
+        </div>
+
+   {%endblock header%}
    {%block content%}{%endblock content%}
  {%endblock body%}         
 </body>

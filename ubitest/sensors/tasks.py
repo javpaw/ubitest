@@ -92,7 +92,54 @@ def calculate_per_hour():
   porhoras['timestamp'] = porhoras['hora'].apply(lambda x: int(
       time.mktime( pd.Timestamp(x).timetuple())  )*1000
     )
-  
+
   #En este momento se tiene las columnas
   #sensor_name  sensor_id hora  valor timestamp
   return porhoras
+
+
+def calculate_per_days():
+  """
+  Calcula la generacion de energia de cada uno de los tres generadores
+  por hora
+  """
+
+  #De Base de datos a dataframe
+  datos = pd.DataFrame(list(models.Valores.objects.all().values('sensor_id','sensor_name','timestamp','valor')))
+  print type(datos)
+  #Asegurar tipos en Dataframe
+  datos['valor'] = datos['valor'].apply(float)
+
+  #Calcular tiempo
+  a =datos['timestamp']/1000
+  a =a.apply(datetime.datetime.fromtimestamp)
+  datos['time']=a
+
+  #Ordenar por tiempo ascendentemente
+  datos = datos.sort('time',ascending=True)
+
+  #Funcion para quedar solo con la hora
+  def cut_hour_minute(date):
+    return date.replace(hour=0,minute=0)
+
+  #Nueva columna donde se ignoran los minutos
+  datos['hora'] = datos['time'].apply(cut_hour_minute)
+
+  #Agrupar por horas y calculo de Energia por hora
+  pordias = datos.groupby(['sensor_name','sensor_id','hora']).valor.sum()
+
+  #Resetear el indice
+  pordias =pordias.reset_index()
+
+  #Calcular el timestamp
+  pordias['timestamp'] = pordias['hora'].apply(lambda x: int(
+      time.mktime( pd.Timestamp(x).timetuple())  )*1000
+    )
+  
+  #En este momento se tiene las columnas
+  #sensor_name  sensor_id hora  valor timestamp
+  return pordias
+
+def calculate_total():
+  pd = calculate_per_days()
+  return pd.valor.sum()
