@@ -20,6 +20,8 @@ def get_unique_sensors():
 def get_all_rest_data():
   print "comenzo el proceso"
   models.Valores.objects.all().delete()
+  print "todos los datos han sido borrados"
+  print "numero valores: %i"%models.Valores.objects.all().count()
   client = ub.ConnectionUbidots()
   client.authKey(api_key)
 
@@ -29,6 +31,7 @@ def get_all_rest_data():
   for site in sites:
     vari = client.getVariables(site['domain'])['variables']
 
+  vari = [i for i in vari if i['name'] in ['gen1','gen2','gen3'] ]
   for vr in vari:
     num_pages = client.getValues(vr['id'])['meta']['num_pages']
     print "variable: %s, num paginas:%s"%(vr['name'],num_pages) 
@@ -50,5 +53,12 @@ def get_all_rest_data():
     models.Valores.objects.bulk_create(data)
 
   return("ok")
+
+def calculate_per_hour():
+  """
+  Calcula la generacion de energia de cada uno de los tres generadores
+  por hora
+  """
+ 
 
 

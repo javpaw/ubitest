@@ -76,6 +76,15 @@ class ConnectionUbidots:
     def postValueRandom(self, variable, limMin=0, limMax=10):
         return self.postValue(variable, random.randint(int(limMin), int(limMax)))
 
+    def createVariable(self,site,variable):
+        fields = {"name":variable}
+        print "/api/v1/sites/%s/variables/"%site
+        dr = self._createJsonRequest(requests.post, "/api/v1/sites/%s/variables/"%site,fields)
+        if dr[0] ==200:
+            return dr[1]
+        else:
+            return False
+
 
 if __name__ == "__main__":
 
