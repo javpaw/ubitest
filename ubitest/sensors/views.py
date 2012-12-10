@@ -20,7 +20,7 @@ def por_horas(request):
       zip(list(result['sensor_name']),list(result['hora']),list(result['valor']) )
   ]
   print result
-  return render_to_response("sensors/por_hora.html",{'resultado':result },RequestContext(request))
+  return render_to_response("sensors/por_hora.html",{'resultado':result,'postear':"/postear_horas" },RequestContext(request))
 
 
 def por_dias(request):
@@ -30,9 +30,27 @@ def por_dias(request):
       zip(list(result['sensor_name']),list(result['hora']),list(result['valor']) )
   ]
   print result
-  return render_to_response("sensors/por_hora.html",{'resultado':result },RequestContext(request))
+  return render_to_response("sensors/por_hora.html",{'resultado':result,'postear':"/postear_dias" },RequestContext(request))
 
 def total(request):
     from tasks import calculate_total
     result = int(calculate_total()/1000)
     return render_to_response("sensors/total.html",{"resultado":result},RequestContext(request))
+
+
+def postear_horas(request):
+  from tasks import post_to_ubidots
+  post_to_ubidots.delay()
+  return render_to_response("sensors/posteando.html",{},RequestContext(request))
+
+
+def postear_dias(request):
+  from tasks import post_to_ubidots
+  post_to_ubidots.delay(time='days')
+  return render_to_response("sensors/posteando.html",{},RequestContext(request))
+
+
+def resultado_total(request):
+  from tasks import post_grant_result
+  post_grant_result.delay()
+  return render_to_response("sensors/posteando.html",{},RequestContext(request))

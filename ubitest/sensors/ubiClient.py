@@ -49,7 +49,7 @@ class ConnectionUbidots:
         else:
             return False
 
-    def getValues2(self,variable,page=1):		
+    def getValues2(self,variable,page=1):       
         dr = self._createJsonRequest(requests.get, "/api/v1/variables/%s/values/?page=%s" % (variable,page))
         if dr[0] == 200:
             return dr[1]
@@ -75,6 +75,22 @@ class ConnectionUbidots:
 
     def postValueRandom(self, variable, limMin=0, limMax=10):
         return self.postValue(variable, random.randint(int(limMin), int(limMax)))
+
+    def createVariable(self,site,variable):
+        fields = {"name":variable}
+        print "/api/v1/sites/%s/variables/"%site
+        dr = self._createJsonRequest(requests.post, "/api/v1/sites/%s/variables/"%site,fields)
+        if dr[0] ==200:
+            return dr[1]
+        else:
+            return False
+
+    def postBulkValues(self,variable_id,fields):
+        dr = self._createJsonRequest(requests.post, "/api/v1/collections/variables/%s/values"%variable_id,fields)
+        if dr[0] ==200:
+            return dr[1]
+        else:
+            return False
 
 
 if __name__ == "__main__":

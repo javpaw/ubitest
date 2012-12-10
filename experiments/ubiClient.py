@@ -85,6 +85,13 @@ class ConnectionUbidots:
         else:
             return False
 
+    def postBulkValues(self,variable_id,fields):
+        dr = self._createJsonRequest(requests.post, "/api/v1/collections/variables/%s/values"%variable_id,fields)
+        if dr[0] ==200:
+            return dr[1]
+        else:
+            return False
+
 
 if __name__ == "__main__":
 

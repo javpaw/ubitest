@@ -32,3 +32,7 @@ print sites
 
 #Crear una variable:
 print client.createVariable("test.com","prueba")
+
+#Enviar varios datos a variable prueba
+fields={"length":2,"value-1":10,"timestamp-1":1317834612000,"value-2":33,"timestamp-2":1317834612001}
+client.postBulkValues(13196,fields)

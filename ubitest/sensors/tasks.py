@@ -5,6 +5,8 @@ import ubiClient as ub
 import models
 import datetime
 import time
+import random
+
 import pandas as pd
 
 @task()
@@ -55,6 +57,7 @@ def get_all_rest_data():
 
   return("ok")
 
+@task()
 def calculate_per_hour():
   """
   Calcula la generacion de energia de cada uno de los tres generadores
@@ -97,7 +100,7 @@ def calculate_per_hour():
   #sensor_name  sensor_id hora  valor timestamp
   return porhoras
 
-
+@task()
 def calculate_per_days():
   """
   Calcula la generacion de energia de cada uno de los tres generadores
@@ -140,6 +143,48 @@ def calculate_per_days():
   #sensor_name  sensor_id hora  valor timestamp
   return pordias
 
+@task()
 def calculate_total():
   pd = calculate_per_days()
   return pd.valor.sum()
+
+@task()
+def post_to_ubidots(time='hours'):
+
+  client = ub.ConnectionUbidots()
+  client.authKey(api_key)
+
+  if time=='hours':
+    result = calculate_per_hour()
+    result['sensor_name'] = result['sensor_name'] +"-horas-" +str(random.randint(1,1000000))
+  else:
+    result = calculate_per_days()
+    result['sensor_name'] = result['sensor_name'] +"-dias-" +str(random.randint(1,1000000))
+
+  vrs = []
+  for i in set(result['sensor_name']):
+    vrs.append(client.createVariable("test.com",i))
+
+  for vr in vrs:
+    data = result[result['sensor_name']==vr['name']]
+    size = len(data)
+
+    a= [('value-%s'%i,val) for i,val in enumerate(list(data['valor']),1) ]
+    size = len(a)
+    b =[('timestamp-%s'%i,val) for i,val in enumerate(list(data['timestamp']),1) ]
+    a.extend(b)
+    a = dict(a)
+    a['length'] = size
+    client.postBulkValues(vr['id'],a)
+
+@task()
+def post_grant_result():
+
+  client = ub.ConnectionUbidots()
+  client.authKey(api_key)
+
+  total = calculate_total()
+
+  vr = client.createVariable("test.com","total-%s"%str(random.randint(1,1000000)) )
+  client.postValue(vr["id"],total)
+
