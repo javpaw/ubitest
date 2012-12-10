@@ -28,7 +28,7 @@ def get_all_rest_data():
   print "num sitios: %s"%len(sites)
   for site in sites:
     vari = client.getVariables(site['domain'])['variables']
-  
+
   for vr in vari:
     num_pages = client.getValues(vr['id'])['meta']['num_pages']
     print "variable: %s, num paginas:%s"%(vr['name'],num_pages) 
@@ -49,6 +49,6 @@ def get_all_rest_data():
     print "variable: %s, num valores:%s"%(vr['name'],len(data))
     models.Valores.objects.bulk_create(data)
 
-    return("ok")
+  return("ok")
 
 

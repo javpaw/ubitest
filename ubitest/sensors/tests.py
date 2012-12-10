@@ -92,8 +92,6 @@ class RestTest(TestCase):
       num_pages = client.getValues(vr['id'])['meta']['num_pages']
 
       data =[]
-      #patch para hacer el test mas rapido:
-      #num_pages = 2
       for i in range(1,num_pages):
         vals = client.getValues2(vr["id"],page=i)['values']
         data.extend([
