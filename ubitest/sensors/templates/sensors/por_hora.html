@@ -1,0 +1,29 @@
+{%extends "base.html"%}
+
+{%block content%}
+
+<div class="container">
+  <div class="row">
+    <div class="span12">
+
+		<table class="table table-bordered table-hover table-condensed">
+		  <thead>	
+	      <td>Sensor</td>
+	      <td>Hora</td>
+	      <td>Valor</td>
+          </thead>
+          
+          <tbody>
+		  {%for res in resultado%}
+		   <tr>
+		      <td class={%%}>{{res.sensor}}</td>
+		      <td>{{res.hora}}</td>
+		      <td>{{res.valor}}</td>
+		   </tr>
+		  {%endfor%}
+		  </tbody>
+		</table>
+    </div>
+  </div>
+</div>
+{%endblock%}
